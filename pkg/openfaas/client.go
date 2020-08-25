@@ -62,6 +62,9 @@ func (c *Client) InvokeSync(ctx context.Context, name string, payload []byte) ([
 	functionURL := fmt.Sprintf("%s/function/%s", c.url, name)
 
 	req, _ := http.NewRequestWithContext(ctx, http.MethodPost, functionURL, bytes.NewReader(payload))
+	
+	req.Header.Set("Content-Type", "text/plain")
+	
 	if c.credentials != nil {
 		req.SetBasicAuth(c.credentials.User, c.credentials.Password)
 	}
